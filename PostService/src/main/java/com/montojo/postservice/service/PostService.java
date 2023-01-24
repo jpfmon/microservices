@@ -34,7 +34,7 @@ public class PostService {
         log.info("Post saved: " + postEnt + " \n");
 
         try {
-            String urlString = "http://localhost:8082/api/v1/users/user/" + postDTO.getAuthorId();
+            String urlString = "http://usersapp:8082/api/v1/users/user/" + postDTO.getAuthorId();
             log.info("Using url: {}", urlString);
             URL url = new URL(urlString);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -67,7 +67,7 @@ public class PostService {
         postRepository.deleteById(id);
         log.info("Post with id {} deleted.\n", id);
         try {
-            String urlString = "http://users:8082/api/v1/users/user/" + postEnt.getAuthorId();
+            String urlString = "http://usersapp:8082/api/v1/users/user/" + postEnt.getAuthorId();
             log.info("Using url: {}", urlString);
             URL url = new URL(urlString);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();

@@ -8,12 +8,19 @@ services:
       - MYSQL_PASSWORD=admin1234
       - MYSQL_ROOT_PASSWORD=admin1234
       - MYSQL_DATABASE=users
-    networks:
-      - usersnetwork
+#      - MYSQL_ROOT_HOST='%'
+#    networks:
+#      - usersnetwork
     ports:
-      - "3308:3306"
+      - "3308:3306/tcp"
     volumes:
       - pgdata:/var/lib/mysql1/data
+
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#      - 8081:8080
 
   posts_db:
     image: mysql:8.0.30
@@ -22,45 +29,52 @@ services:
       - MYSQL_PASSWORD=admin1234
       - MYSQL_ROOT_PASSWORD=admin1234
       - MYSQL_DATABASE=posts
-    networks:
-      - postsnetwork
+#      - MYSQL_ROOT_HOST='%'
+#    networks:
+#      - postsnetwork
     ports:
-      - "3309:3306"
+      - "3309:3306/tcp"
     volumes:
       - pgdata:/var/lib/mysql2/data
+#    expose:
+#      - "3309"
 
   usersapp:
     image: epamjuanpablofernandezmontojo/userservice
     environment:
-      - DB_URL=jdbc:mysql://users_db:3308/users?useSSL=false
-      - DB_USERNAME=admin
+      - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3308/users?useSSL=false
+#      - DB_URL=jdbc:mysql://users_db:3308/users
+      - DB_USERNAME=root
       - DB_PASSWORD=admin1234
     ports:
       - "8082:8082"
     depends_on:
       - users_db
-    networks:
-      - usersnetwork
-      - services
+#    restart: always
+#    networks:
+#      - usersnetwork
+#      - services
 
   postsapp:
     image: epamjuanpablofernandezmontojo/postservice
     environment:
-      - DB_URL=jdbc:mysql://posts_db:3309/posts?useSSL=false
-      - DB_USERNAME=admin
+      - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3309/posts?useSSL=false
+#      - DB_URL=jdbc:mysql://posts_db:3309/posts
+      - DB_USERNAME=root
       - DB_PASSWORD=admin1234
     ports:
       - "8080:8080"
     depends_on:
       - posts_db
-    networks:
-      - postsnetwork
-      - services
+#    restart: always
+#    networks:
+#      - postsnetwork
+#      - services
 
 volumes:
   pgdata:
 
-networks:
-  postsnetwork:
-  usersnetwork:
-  services:
+#networks:
+#  postsnetwork:
+#  usersnetwork:
+#  services:
