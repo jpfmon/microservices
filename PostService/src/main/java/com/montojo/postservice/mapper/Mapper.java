@@ -17,6 +17,7 @@ public class Mapper {
         postDTO.setAuthorId(postEnt.getAuthorId());
         postDTO.setPostedAt(postEnt.getPostedAt().format(formatter));
 
+        postDTO.setTopic(postEnt.getTopic());
         return postDTO;
     }
 
@@ -27,6 +28,8 @@ public class Mapper {
         postEnt.setAuthorId(postDTO.getAuthorId());
         postEnt.setText(postDTO.getText());
         postEnt.setPostedAt(postDTO.getPostedAt() ==null? null : LocalDate.parse(postDTO.getPostedAt()));
+
+        postEnt.setTopic(postDTO.getTopic());
 
         return postEnt;
     }

@@ -24,4 +24,6 @@ public class PostEnt {
     private Long authorId;
     private String text;
     private LocalDate postedAt;
+
+    private String topic;
 }
